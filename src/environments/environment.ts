@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://dev.toladata.io/api/'
+  baseUrl: 'https://dev-api.toladata.io/api/'
 };
 
 /*

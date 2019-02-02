@@ -7,11 +7,22 @@ import { ProgramService } from './program-service/program-service.service';
 import {
   MatTableModule,
   MatPaginatorModule,
-  MatCardModule
+  MatCardModule,
+  MatIconModule,
+  MatProgressSpinnerModule,
+  MatButtonModule
 } from '@angular/material';
 
 @NgModule({
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatCardModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatCardModule,
+    MatProgressSpinnerModule
+  ],
   providers: [ProgramService],
   declarations: [
     ProgramsComponent,
