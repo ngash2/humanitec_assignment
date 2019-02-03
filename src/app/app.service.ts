@@ -43,6 +43,16 @@ export class AppService {
   }
 
   /**
+   * Make a HTTP PUT call to the API
+   * @param {String} url  Url The path to the API
+   * @param {any} obj
+   * @returns {Observable} Observable
+   */
+  public put(url: String, obj: any) {
+    return this.http.put(`${this.baseurl}${url}`, obj, this.httpOptions);
+  }
+
+  /**
    * Make a HTTP DELETE call to the API
    * @param {String} url
    * @returns {Observable} Observable

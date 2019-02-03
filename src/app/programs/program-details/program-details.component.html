@@ -1,3 +1,13 @@
-<p>
-  program-details works!
-</p>
+<mat-toolbar class="toolbar">
+  <span>
+    <h1 class="heading-text">Program: {{ program.name }}</h1>
+  </span>
+  <span class="fill-remaining-space"></span>
+  <button mat-icon-button (click)="closeDetails()" matTooltip="Close Details">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+  <!-- Show Program Details with cards-->
+</div>
+<app-activities-list [program]="program"></app-activities-list>

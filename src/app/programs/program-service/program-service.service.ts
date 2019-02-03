@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { AppService } from '@app/app.service';
 import { HttpParams } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { Programs } from '../program';
+import { Programs, Program } from '../program';
 import { throwError } from 'rxjs/internal/observable/throwError';
 
 @Injectable({
@@ -11,7 +11,13 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 export class ProgramService {
   programUrl = 'workflowlevel1/';
 
-  constructor(private service: AppService) {}
+  public onShowProgramDetails$: EventEmitter<Program>;
+  public onClose$: EventEmitter<any>;
+
+  constructor(private service: AppService) {
+    this.onShowProgramDetails$ = new EventEmitter<Program>();
+    this.onClose$ = new EventEmitter<any>();
+  }
 
   /**
    * Get a List of Programs
@@ -21,11 +27,7 @@ export class ProgramService {
   public getPrograms() {
     return this.service.get(this.programUrl, new HttpParams()).pipe(
       catchError(e => throwError(e)),
-      map((result: Programs) => {
-        return result.map(({ id, name, status, start_date, end_date }) => {
-          return { id, name, status, start_date, end_date };
-        });
-      })
+      map((results: Programs) => results)
     );
   }
 }

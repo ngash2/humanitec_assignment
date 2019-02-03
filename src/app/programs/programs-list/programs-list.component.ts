@@ -51,5 +51,7 @@ export class ProgramsListComponent implements OnInit {
     );
   }
 
-  showDetails() {}
+  showDetails(program: Program) {
+    this.programsService.onShowProgramDetails$.emit(program);
+  }
 }

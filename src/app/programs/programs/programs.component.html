@@ -1,3 +1,8 @@
 <div class="container">
-  <app-programs-list></app-programs-list>
+  <ng-container *ngIf="showProgramsList; else showProgramDetails">
+    <app-programs-list></app-programs-list>
+  </ng-container>
+  <ng-template #showProgramDetails>
+    <app-program-details [program]="program"></app-program-details>
+  </ng-template>
 </div>

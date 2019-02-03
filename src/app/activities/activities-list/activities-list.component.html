@@ -1,0 +1,51 @@
+<mat-table [dataSource]="dataSource" mat-elevation-z4 *ngIf="activities.length > 0">
+  <!-- Activty Name -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-text">Activity Name</mat-header-cell>
+    <mat-cell *matCellDef="let activity">{{activity.name}}</mat-cell>
+  </ng-container>
+
+  <!-- Start Date -->
+  <ng-container matColumnDef="expectedStartDate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-text">Start Date</mat-header-cell>
+    <mat-cell *matCellDef="let activity"> {{activity.expected_start_date | date:"dd.MM.y"}} </mat-cell>
+  </ng-container>
+
+  <!-- End Date-->
+  <ng-container matColumnDef="expectedEndDate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-text">End Date</mat-header-cell>
+    <mat-cell *matCellDef="let activity"> {{activity.expected_end_date | date:"dd.MM.y"}} </mat-cell>
+  </ng-container>
+
+  <!-- Progress -->
+  <ng-container matColumnDef="progress">
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-text">Progress</mat-header-cell>
+    <mat-cell *matCellDef="let activity">
+      <mat-icon class="default-status" [ngClass]="activity.progress ? activity.progress :''">fiber_manual_record</mat-icon>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Status -->
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-text">Status</mat-header-cell>
+    <mat-cell *matCellDef="let activity">
+      <mat-icon class="default-status" [ngClass]="activity.status ? activity.status :''">fiber_manual_record</mat-icon>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Actions -->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef class="mat-header-text actions-column">Actions</mat-header-cell>
+    <mat-cell *matCellDef="let activity; let i=index;" class="actions-column">
+      <button mat-icon-button color="warn" (click)="deleteActivity(activity)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+  <mat-row [ngClass]="{'highlight': index%2 == 1}" *matRowDef="let row; columns: displayedColumns;let index = index"></mat-row>
+</mat-table>
+<mat-paginator #paginator *ngIf="activities.length > 6" [pageSize]="pageSize" [pageSizeOptions]="[3, 6, 9]"
+  [showFirstLastButtons]="true" [length]="totalSize" [pageIndex]="currentPage" (page)="pageEvent = getPaginatorData($event)">
+</mat-paginator>
