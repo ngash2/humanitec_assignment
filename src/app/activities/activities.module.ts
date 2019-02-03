@@ -1,26 +1,46 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivitiesListComponent } from './activities-list/activities-list.component';
 import {
   MatButtonModule,
   MatIconModule,
   MatToolbarModule,
   MatTableModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatDialogModule,
+  MatDatepickerModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatNativeDateModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FlexModule, FlexLayoutModule } from '@angular/flex-layout';
+
 import { ActivitiesService } from './activities-service/activities-service.service';
 import { ActivitiesFormComponent } from './activities-form/activities-form.component';
+import { ActivitiesListComponent } from './activities-list/activities-list.component';
 
 @NgModule({
   declarations: [ActivitiesListComponent, ActivitiesFormComponent],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FlexModule,
+    FlexLayoutModule,
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
     MatTableModule,
-    MatPaginatorModule
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDialogModule
   ],
+  entryComponents: [ActivitiesFormComponent, ActivitiesListComponent],
   exports: [ActivitiesListComponent],
   providers: [ActivitiesService]
 })

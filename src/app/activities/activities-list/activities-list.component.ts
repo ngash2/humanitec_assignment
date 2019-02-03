@@ -3,6 +3,7 @@ import { ActivitiesService } from '../activities-service/activities-service.serv
 import { Program } from '@app/programs/program';
 import { Activities } from '../activity';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { ProgramService } from '@app/programs/program-service/program-service.service';
 
 @Component({
   selector: 'app-activities-list',
@@ -23,18 +24,22 @@ export class ActivitiesListComponent implements OnInit {
   ];
   activities: Activities = [];
   dataSource = new MatTableDataSource<Program>([]);
-  loading: Boolean;
+  loading: Boolean = true;
   pageSize = 10;
   pageIndex = 0;
   activitiesTotal = 0;
 
-  constructor(private activityService: ActivitiesService) {}
+  constructor(
+    private activityService: ActivitiesService,
+    private programService: ProgramService
+  ) {}
 
   ngOnInit() {
     this.getActivities();
   }
 
   getActivities() {
+    this.emitLoading();
     this.activityService.getActivities('' + this.program.id).subscribe(data => {
       this.activities = data;
       this.activitiesTotal = data.length;
@@ -42,6 +47,7 @@ export class ActivitiesListComponent implements OnInit {
         [...this.activities].slice(this.pageIndex, this.pageSize)
       );
       this.loading = false;
+      this.emitLoading();
     });
   }
 
@@ -57,5 +63,9 @@ export class ActivitiesListComponent implements OnInit {
     this.dataSource = new MatTableDataSource(
       [...this.activities].slice(start, end)
     );
+  }
+
+  emitLoading() {
+    this.programService.onLoading$.emit(this.loading);
   }
 }

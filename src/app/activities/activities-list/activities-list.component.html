@@ -1,4 +1,4 @@
-<mat-table [dataSource]="dataSource" mat-elevation-z4 *ngIf="activities.length > 0">
+<mat-table [dataSource]="dataSource" mat-elevation-z4>
   <!-- Activty Name -->
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-text">Activity Name</mat-header-cell>
@@ -44,8 +44,9 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-  <mat-row [ngClass]="{'highlight': index%2 == 1}" *matRowDef="let row; columns: displayedColumns;let index = index"></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;let index = index"></mat-row>
 </mat-table>
-<mat-paginator #paginator *ngIf="activities.length > 6" [pageSize]="pageSize" [pageSizeOptions]="[3, 6, 9]"
+<div *ngIf="activities.length <= 0 && loading === false">No Record found</div>
+<mat-paginator #paginator *ngIf="activities.length > 10" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 25]"
   [showFirstLastButtons]="true" [length]="totalSize" [pageIndex]="currentPage" (page)="pageEvent = getPaginatorData($event)">
 </mat-paginator>

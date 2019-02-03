@@ -11,12 +11,12 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 export class ProgramService {
   programUrl = 'workflowlevel1/';
 
-  public onShowProgramDetails$: EventEmitter<Program>;
-  public onClose$: EventEmitter<any>;
+  public onLoading$: EventEmitter<Boolean>;
+  public onShowSnackBar$: EventEmitter<String>;
 
   constructor(private service: AppService) {
-    this.onShowProgramDetails$ = new EventEmitter<Program>();
-    this.onClose$ = new EventEmitter<any>();
+    this.onLoading$ = new EventEmitter<Boolean>();
+    this.onShowSnackBar$ = new EventEmitter<String>();
   }
 
   /**

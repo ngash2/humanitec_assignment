@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatToolbarModule } from '@angular/material';
+import { MatToolbarModule, MatDialogModule } from '@angular/material';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -25,7 +25,8 @@ import { ActivitiesModule } from './activities/activities.module';
     HttpClientModule,
     MatToolbarModule,
     ProgramsModule,
-    ActivitiesModule
+    ActivitiesModule,
+    MatDialogModule
   ],
   providers: [{ provide: BASE_URL, useValue: environment.baseUrl }, AppService],
   bootstrap: [AppComponent]

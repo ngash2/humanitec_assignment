@@ -1,6 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { ProgramService } from '../program-service/program-service.service';
 import { Program } from '../program';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ActivitiesFormComponent } from '@app/activities/activities-form/activities-form.component';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-program-details',
@@ -8,16 +11,25 @@ import { Program } from '../program';
   styleUrls: ['./program-details.component.scss']
 })
 export class ProgramDetailsComponent implements OnInit {
-  @Input() program: Program;
+  program: Program;
+  loading: Boolean = false;
+  constructor(
+    public dialogRef: MatDialogRef<ActivitiesFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Program,
+    private programService: ProgramService
+  ) {
+    if (isNullOrUndefined(data)) {
+      this.closeDialog();
+    }
+    this.program = data;
 
-  constructor(private programService: ProgramService) {}
-
-  ngOnInit() {
-    console.log(this.program);
+    programService.onLoading$.subscribe(
+      (data: Boolean) => (this.loading = data)
+    );
   }
+  ngOnInit() {}
 
-  closeDetails() {
-    this.program = null;
-    this.programService.onClose$.emit();
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

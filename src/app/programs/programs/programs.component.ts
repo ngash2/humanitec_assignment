@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Program } from '../program';
 import { ProgramService } from '../program-service/program-service.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-programs',
@@ -11,14 +12,14 @@ export class ProgramsComponent implements OnInit {
   showProgramsList: Boolean = true;
   program: Program;
 
-  constructor(private programService: ProgramService) {
-    this.programService.onShowProgramDetails$.subscribe(data => {
-      this.showProgramsList = false;
-      this.program = data;
-    });
-    this.programService.onClose$.subscribe(data => {
-      this.showProgramsList = true;
-      this.program = null;
+  constructor(
+    private programService: ProgramService,
+    private snackBar: MatSnackBar
+  ) {
+    this.programService.onShowSnackBar$.subscribe(data => {
+      this.snackBar.open(data, 'close', {
+        duration: 2000
+      });
     });
   }
 

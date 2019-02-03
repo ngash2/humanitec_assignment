@@ -7,7 +7,9 @@ import {
   MatIconModule,
   MatProgressSpinnerModule,
   MatButtonModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatDialogModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 import { ProgramsComponent } from './programs/programs.component';
@@ -26,8 +28,11 @@ import { ActivitiesModule } from '@app/activities/activities.module';
     MatPaginatorModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    MatSnackBarModule,
     ActivitiesModule
   ],
+  entryComponents: [ProgramDetailsComponent],
   providers: [ProgramService],
   declarations: [
     ProgramsComponent,

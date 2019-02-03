@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProgramService } from '../program-service/program-service.service';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { Program, Programs } from '../program';
+import { ProgramDetailsComponent } from '../program-details/program-details.component';
+import { ActivitiesFormComponent } from '@app/activities/activities-form/activities-form.component';
+import { ActivitiesListComponent } from '@app/activities/activities-list/activities-list.component';
 
 @Component({
   selector: 'app-programs-list',
@@ -11,7 +14,13 @@ import { Program, Programs } from '../program';
 export class ProgramsListComponent implements OnInit {
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
-  displayedColumns: string[] = ['name', 'start_date', 'end_date', 'actions'];
+  displayedColumns: string[] = [
+    'name',
+    'start_date',
+    'end_date',
+    'status',
+    'actions'
+  ];
   programs: Programs = [];
   dataSource = new MatTableDataSource<Program>();
   loading: Boolean;
@@ -19,7 +28,10 @@ export class ProgramsListComponent implements OnInit {
   pageIndex = 0;
   programsTotal = 0;
 
-  constructor(private programsService: ProgramService) {}
+  constructor(
+    public dialog: MatDialog,
+    private programsService: ProgramService
+  ) {}
 
   ngOnInit() {
     this.getProgramsData();
@@ -52,6 +64,16 @@ export class ProgramsListComponent implements OnInit {
   }
 
   showDetails(program: Program) {
-    this.programsService.onShowProgramDetails$.emit(program);
+    this.dialog.open(ProgramDetailsComponent, {
+      width: '50%',
+      data: program
+    });
+  }
+
+  showAddActivity(program: Program) {
+    this.dialog.open(ActivitiesFormComponent, {
+      width: '50%',
+      data: { program: program }
+    });
   }
 }

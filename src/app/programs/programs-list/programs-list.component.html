@@ -1,7 +1,8 @@
 <div *ngIf="isLoading" class="mat-spinner-container">
-  <mat-progress-spinner mode="indeterminate">
+  <mat-progress-spinner [diameter]="30" mode="indeterminate">
   </mat-progress-spinner>
 </div>
+<div *ngIf="dataSource.length === 0">No Records Found</div>
 <mat-table [dataSource]="dataSource">
   <!-- Name -->
   <ng-container matColumnDef="name">
@@ -23,6 +24,14 @@
     <mat-cell *matCellDef="let program"> {{program.end_date | date:"dd.MM.y"}} </mat-cell>
   </ng-container>
 
+  <!-- Status -->
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-text">Status</mat-header-cell>
+    <mat-cell *matCellDef="let program">
+      <mat-icon class="default-status" [ngClass]="program.status ? program.status :''">fiber_manual_record</mat-icon>
+    </mat-cell>
+  </ng-container>
+
   <!--Actions-->
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef class="actions-column">Actions</mat-header-cell>
@@ -30,11 +39,15 @@
       <button mat-icon-button (click)="showDetails(program)" matTooltip="Show Details">
         <mat-icon>assignment</mat-icon>
       </button>
+      <button mat-icon-button class="green" (click)="showAddActivity(program)" matTooltip="Show Add activity"
+        matTooltipPosition="below">
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
     </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-  <mat-row [ngClass]="{'highlight': index%2 == 1}" *matRowDef="let row; columns: displayedColumns;let index = index"></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;let index = index"></mat-row>
 </mat-table>
 <mat-paginator #paginator *ngIf="programs.length > 10" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 15]"
   [showFirstLastButtons]="true" [length]="programsTotal" [pageIndex]="pageIndex" (page)="pageEvent = getPaginatorData($event)">
