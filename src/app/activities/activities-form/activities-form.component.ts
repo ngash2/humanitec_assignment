@@ -117,6 +117,7 @@ export class ActivitiesFormComponent implements OnInit {
 
   updateActivity(model: Activity) {
     model.id = this.data.activity.id;
+    model.workflowlevel1 = this.data.activity.workflowlevel1;
     this.activityService.updateActivity(model).subscribe(data => {
       this.showProgress = false;
       this.programService.onShowSnackBar$.emit('Actvity Successfully Updated');

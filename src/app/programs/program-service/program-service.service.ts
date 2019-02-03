@@ -13,10 +13,12 @@ export class ProgramService {
 
   public onLoading$: EventEmitter<Boolean>;
   public onShowSnackBar$: EventEmitter<String>;
+  public onCloseDetailDialog$: EventEmitter<String>;
 
   constructor(private service: AppService) {
     this.onLoading$ = new EventEmitter<Boolean>();
     this.onShowSnackBar$ = new EventEmitter<String>();
+    this.onCloseDetailDialog$ = new EventEmitter<any>();
   }
 
   /**

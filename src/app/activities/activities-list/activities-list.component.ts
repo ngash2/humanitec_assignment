@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivitiesService } from '../activities-service/activities-service.service';
 import { Program } from '@app/programs/program';
-import { Activities } from '../activity';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { Activities, Activity } from '../activity';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { ProgramService } from '@app/programs/program-service/program-service.service';
+import { ActivitiesFormComponent } from '../activities-form/activities-form.component';
 
 @Component({
   selector: 'app-activities-list',
@@ -31,6 +32,7 @@ export class ActivitiesListComponent implements OnInit {
 
   constructor(
     private activityService: ActivitiesService,
+    public dialog: MatDialog,
     private programService: ProgramService
   ) {}
 
@@ -68,4 +70,14 @@ export class ActivitiesListComponent implements OnInit {
   emitLoading() {
     this.programService.onLoading$.emit(this.loading);
   }
+
+  showEditActivity(activity: Activity) {
+    this.dialog.open(ActivitiesFormComponent, {
+      width: '50%',
+      data: { program: this.program, activity: activity }
+    });
+    this.programService.onCloseDetailDialog$.emit();
+  }
+
+  showDeleteActivity(activityId: String) {}
 }

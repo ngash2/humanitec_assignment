@@ -24,8 +24,13 @@ export class ProgramDetailsComponent implements OnInit {
     this.program = data;
 
     programService.onLoading$.subscribe(
+      // tslint:disable-next-line:no-shadowed-variable
       (data: Boolean) => (this.loading = data)
     );
+
+    programService.onCloseDetailDialog$.subscribe((data: any) => {
+      this.closeDialog();
+    });
   }
   ngOnInit() {}
 
