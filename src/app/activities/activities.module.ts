@@ -19,9 +19,14 @@ import { FlexModule, FlexLayoutModule } from '@angular/flex-layout';
 import { ActivitiesService } from './activities-service/activities-service.service';
 import { ActivitiesFormComponent } from './activities-form/activities-form.component';
 import { ActivitiesListComponent } from './activities-list/activities-list.component';
+import { ActivitiesDeleteComponent } from './activities-delete/activities-delete.component';
 
 @NgModule({
-  declarations: [ActivitiesListComponent, ActivitiesFormComponent],
+  declarations: [
+    ActivitiesListComponent,
+    ActivitiesFormComponent,
+    ActivitiesDeleteComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -40,7 +45,11 @@ import { ActivitiesListComponent } from './activities-list/activities-list.compo
     MatNativeDateModule,
     MatDialogModule
   ],
-  entryComponents: [ActivitiesFormComponent, ActivitiesListComponent],
+  entryComponents: [
+    ActivitiesFormComponent,
+    ActivitiesListComponent,
+    ActivitiesDeleteComponent
+  ],
   exports: [ActivitiesListComponent],
   providers: [ActivitiesService]
 })

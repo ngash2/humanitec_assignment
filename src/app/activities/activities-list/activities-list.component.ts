@@ -5,6 +5,7 @@ import { Activities, Activity } from '../activity';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { ProgramService } from '@app/programs/program-service/program-service.service';
 import { ActivitiesFormComponent } from '../activities-form/activities-form.component';
+import { ActivitiesDeleteComponent } from '../activities-delete/activities-delete.component';
 
 @Component({
   selector: 'app-activities-list',
@@ -79,5 +80,11 @@ export class ActivitiesListComponent implements OnInit {
     this.programService.onCloseDetailDialog$.emit();
   }
 
-  showDeleteActivity(activityId: String) {}
+  showDeleteActivity(activity: Activity) {
+    this.dialog.open(ActivitiesDeleteComponent, {
+      width: '50%',
+      data: { id: activity.id, name: activity.name }
+    });
+    this.programService.onCloseDetailDialog$.emit();
+  }
 }
