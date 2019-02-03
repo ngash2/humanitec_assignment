@@ -29,6 +29,12 @@ export function reducer(
     case ActivityActionTypes.LoadActivitiesSuccess: {
       return activityAdapter.addAll(action.payload, state);
     }
+    case ActivityActionTypes.AddActivity: {
+      return { ...state };
+    }
+    case ActivityActionTypes.AddActivitySuccess: {
+      return activityAdapter.addOne(action.payload, state);
+    }
     default:
       return state;
   }

@@ -1,10 +1,14 @@
 import { Action } from '@ngrx/store';
-import { Activities } from '../activity';
+import { Activities, Activity } from '../activity';
 
 export enum ActivityActionTypes {
   LoadActivities = '[Activities] Load All Activities',
   LoadActivitiesFail = '[Activities] Activities Fail',
-  LoadActivitiesSuccess = '[Activities] Load All Activities Success'
+  LoadActivitiesSuccess = '[Activities] Load All Activities Success',
+
+  AddActivity = '[Activity] Add Activity',
+  AddActivityFail = '[Activity] Add Activity Fail',
+  AddActivitySuccess = '[Activity] Add Activity Success'
 }
 
 export class LoadActivities implements Action {
@@ -22,7 +26,25 @@ export class LoadActivitiesSuccess implements Action {
   constructor(public payload: Activities) {}
 }
 
+export class AddActivity implements Action {
+  readonly type = ActivityActionTypes.AddActivity;
+  constructor(public payload: Activity) {}
+}
+
+export class AddActivityFail implements Action {
+  readonly type = ActivityActionTypes.AddActivityFail;
+  constructor(public payload: { error: any }) {}
+}
+
+export class AddActivitySuccess implements Action {
+  readonly type = ActivityActionTypes.AddActivitySuccess;
+  constructor(public payload: Activity) {}
+}
+
 export type ActivityActions =
   | LoadActivities
   | LoadActivitiesFail
-  | LoadActivitiesSuccess;
+  | LoadActivitiesSuccess
+  | AddActivity
+  | AddActivityFail
+  | AddActivitySuccess;

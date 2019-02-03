@@ -13,8 +13,13 @@ import * as moment from 'moment';
 
 import { ActivitiesService } from '../activities-service/activities-service.service';
 import { Activity } from '../activity';
+import * as activityActions from '../actions/activity.actions';
+import * as fromStore from '@app/core/store/reducers/index';
 import { Program } from '@app/programs/program';
 import { ProgramService } from '@app/programs/program-service/program-service.service';
+import { Store, select } from '@ngrx/store';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { selectAllActivities } from '../selectors/activity.selector';
 
 export interface ActivityDialogData {
   activity?: Activity;
@@ -49,11 +54,14 @@ export class ActivitiesFormComponent implements OnInit {
   isUpdate: Boolean = false;
   title: String = 'Add Program Activity';
 
+  subscription: Subscription;
+
   constructor(
     public dialogRef: MatDialogRef<ActivitiesFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ActivityDialogData,
     private activityService: ActivitiesService,
-    private programService: ProgramService
+    private programService: ProgramService,
+    private store: Store<fromStore.State>
   ) {
     this.initActivityForm();
     if (!isNullOrUndefined(data.activity)) {
@@ -108,6 +116,7 @@ export class ActivitiesFormComponent implements OnInit {
     model.workflowlevel1 = `https://dev.toladata.io/api/workflowlevel1/${
       this.data.program.id
     }/`;
+
     this.activityService.addActivity(model).subscribe(data => {
       this.showProgress = false;
       this.programService.onShowSnackBar$.emit('Actvity Successfully Created');

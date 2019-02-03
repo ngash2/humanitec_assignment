@@ -6,10 +6,12 @@ import { Action } from '@ngrx/store';
 import {
   ActivityActionTypes,
   LoadActivities,
-  LoadActivitiesSuccess
+  LoadActivitiesSuccess,
+  AddActivity,
+  AddActivitySuccess
 } from '../actions/activity.actions';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
-import { Activities } from '../activity';
+import { Activities, Activity } from '../activity';
 import { map } from 'rxjs/internal/operators/map';
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { of } from 'rxjs/internal/observable/of';
@@ -24,6 +26,17 @@ export class ActivityEffects {
     switchMap((action: LoadActivities) =>
       this.service.getActivities(action.payload).pipe(
         map((activities: Activities) => new LoadActivitiesSuccess(activities)),
+        catchError(error => of(error))
+      )
+    )
+  );
+
+  @Effect()
+  addActivity$: Observable<Action> = this.actions$.pipe(
+    ofType(ActivityActionTypes.AddActivity),
+    switchMap((action: AddActivity) =>
+      this.service.addActivity(action.payload).pipe(
+        map((activity: Activity) => new AddActivitySuccess(activity)),
         catchError(error => of(error))
       )
     )
