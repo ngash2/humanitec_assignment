@@ -4,7 +4,11 @@ import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { Program, Programs } from '../program';
 import { ProgramDetailsComponent } from '../program-details/program-details.component';
 import { ActivitiesFormComponent } from '@app/activities/activities-form/activities-form.component';
-import { ActivitiesListComponent } from '@app/activities/activities-list/activities-list.component';
+import * as fromStore from '@app/core/store/reducers/index';
+import * as programActions from '../actions/program.actions';
+import { Store, select } from '@ngrx/store';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { selectAllPrograms } from '../selectors/program.selector';
 
 @Component({
   selector: 'app-programs-list',
@@ -28,10 +32,11 @@ export class ProgramsListComponent implements OnInit {
   pageIndex = 0;
   programsTotal = 0;
 
-  constructor(
-    public dialog: MatDialog,
-    private programsService: ProgramService
-  ) {}
+  subscription: Subscription;
+
+  constructor(public dialog: MatDialog, private store: Store<fromStore.State>) {
+    this.store.dispatch(new programActions.LoadPrograms());
+  }
 
   ngOnInit() {
     this.getProgramsData();
@@ -39,14 +44,16 @@ export class ProgramsListComponent implements OnInit {
 
   getProgramsData() {
     this.loading = true;
-    this.programsService.getPrograms().subscribe(data => {
-      this.programs = data;
-      this.programsTotal = data.length;
-      this.dataSource = new MatTableDataSource<Program>(
-        [...this.programs].slice(this.pageIndex, this.pageSize)
-      );
-      this.loading = false;
-    });
+    this.subscription = this.store
+      .pipe(select(selectAllPrograms))
+      .subscribe(data => {
+        this.programs = data;
+        this.programsTotal = data.length;
+        this.dataSource = new MatTableDataSource<Program>(
+          [...this.programs].slice(this.pageIndex, this.pageSize)
+        );
+        this.loading = false;
+      });
   }
 
   getPaginatorData(e: any) {

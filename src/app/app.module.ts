@@ -13,6 +13,12 @@ import { environment } from '@env/environment';
 import { ProgramsModule } from './programs/programs.module';
 import { AppService } from './app.service';
 import { ActivitiesModule } from './activities/activities.module';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './core/store/reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './core/store/effects/app.effects';
+import { ProgramEffects } from './programs/effects/program.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +32,10 @@ import { ActivitiesModule } from './activities/activities.module';
     MatToolbarModule,
     ProgramsModule,
     ActivitiesModule,
-    MatDialogModule
+    MatDialogModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([ProgramEffects])
   ],
   providers: [{ provide: BASE_URL, useValue: environment.baseUrl }, AppService],
   bootstrap: [AppComponent]
