@@ -1,11 +1,18 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+
 import { ActivitiesService } from '../activities-service/activities-service.service';
 import { Program } from '@app/programs/program';
 import { Activities, Activity } from '../activity';
-import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import * as fromStore from '@app/core/store/reducers/index';
+import * as activityActions from '../actions/activity.actions';
 import { ProgramService } from '@app/programs/program-service/program-service.service';
 import { ActivitiesFormComponent } from '../activities-form/activities-form.component';
 import { ActivitiesDeleteComponent } from '../activities-delete/activities-delete.component';
+import { Store, select } from '@ngrx/store';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { selectAllActivities } from '../selectors/activity.selector';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-activities-list',
@@ -26,32 +33,41 @@ export class ActivitiesListComponent implements OnInit {
   ];
   activities: Activities = [];
   dataSource = new MatTableDataSource<Program>([]);
-  loading: Boolean = true;
+  loading: Boolean;
   pageSize = 10;
   pageIndex = 0;
   activitiesTotal = 0;
 
+  subscription: Subscription;
+
   constructor(
     private activityService: ActivitiesService,
     public dialog: MatDialog,
-    private programService: ProgramService
+    private programService: ProgramService,
+    private store: Store<fromStore.State>
   ) {}
 
   ngOnInit() {
+    this.store.dispatch(
+      new activityActions.LoadActivities('' + this.program.id)
+    );
     this.getActivities();
   }
 
   getActivities() {
+    this.loading = true;
     this.emitLoading();
-    this.activityService.getActivities('' + this.program.id).subscribe(data => {
-      this.activities = data;
-      this.activitiesTotal = data.length;
-      this.dataSource = new MatTableDataSource<Program>(
-        [...this.activities].slice(this.pageIndex, this.pageSize)
-      );
-      this.loading = false;
-      this.emitLoading();
-    });
+    this.subscription = this.store
+      .pipe(select(selectAllActivities))
+      .subscribe(data => {
+        this.activities = data;
+        this.activitiesTotal = data.length;
+        this.dataSource = new MatTableDataSource<Program>(
+          [...this.activities].slice(this.pageIndex, this.pageSize)
+        );
+        this.loading = false;
+        this.emitLoading();
+      });
   }
 
   getPaginatorData(e: any) {

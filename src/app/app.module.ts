@@ -19,6 +19,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './core/store/effects/app.effects';
 import { ProgramEffects } from './programs/effects/program.effects';
+import { ActivityEffects } from './activities/effects/activity.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +36,7 @@ import { ProgramEffects } from './programs/effects/program.effects';
     MatDialogModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([ProgramEffects])
+    EffectsModule.forRoot([ProgramEffects, ActivityEffects])
   ],
   providers: [{ provide: BASE_URL, useValue: environment.baseUrl }, AppService],
   bootstrap: [AppComponent]
