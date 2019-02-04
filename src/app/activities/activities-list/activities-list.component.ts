@@ -12,7 +12,6 @@ import { ActivitiesDeleteComponent } from '../activities-delete/activities-delet
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { selectAllActivities } from '../selectors/activity.selector';
-import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-activities-list',
@@ -60,13 +59,15 @@ export class ActivitiesListComponent implements OnInit {
     this.subscription = this.store
       .pipe(select(selectAllActivities))
       .subscribe(data => {
-        this.activities = data;
-        this.activitiesTotal = data.length;
-        this.dataSource = new MatTableDataSource<Program>(
-          [...this.activities].slice(this.pageIndex, this.pageSize)
-        );
-        this.loading = false;
-        this.emitLoading();
+        if (data.length > 0) {
+          this.activities = data;
+          this.activitiesTotal = data.length;
+          this.dataSource = new MatTableDataSource<Program>(
+            [...this.activities].slice(this.pageIndex, this.pageSize)
+          );
+          this.loading = false;
+          this.emitLoading();
+        }
       });
   }
 

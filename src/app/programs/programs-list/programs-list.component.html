@@ -1,8 +1,7 @@
 <div *ngIf="loading" class="mat-spinner-container">
-  <mat-progress-spinner [diameter]="30" mode="indeterminate">
-  </mat-progress-spinner>
+  <mat-progress-bar color="warn" mode="indeterminate">
+  </mat-progress-bar>
 </div>
-<div *ngIf="dataSource.length === 0">No Records Found</div>
 <mat-table [dataSource]="dataSource">
   <!-- Name -->
   <ng-container matColumnDef="name">
@@ -49,6 +48,7 @@
   <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;let index = index"></mat-row>
 </mat-table>
+<div *ngIf="programs.length <= 0 && loading === false">No Record found</div>
 <mat-paginator #paginator *ngIf="programs.length > 10" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 15]"
   [showFirstLastButtons]="true" [length]="programsTotal" [pageIndex]="pageIndex" (page)="pageEvent = getPaginatorData($event)">
 </mat-paginator>

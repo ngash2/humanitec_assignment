@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ProgramService } from '../program-service/program-service.service';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { Program, Programs } from '../program';
 import { ProgramDetailsComponent } from '../program-details/program-details.component';

@@ -6,6 +6,7 @@ import {
   MatCardModule,
   MatIconModule,
   MatProgressSpinnerModule,
+  MatProgressBarModule,
   MatButtonModule,
   MatToolbarModule,
   MatDialogModule,
@@ -28,6 +29,7 @@ import { ActivitiesModule } from '@app/activities/activities.module';
     MatPaginatorModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatDialogModule,
     MatSnackBarModule,
     ActivitiesModule

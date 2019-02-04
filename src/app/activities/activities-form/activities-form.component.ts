@@ -13,13 +13,11 @@ import * as moment from 'moment';
 
 import { ActivitiesService } from '../activities-service/activities-service.service';
 import { Activity } from '../activity';
-import * as activityActions from '../actions/activity.actions';
 import * as fromStore from '@app/core/store/reducers/index';
 import { Program } from '@app/programs/program';
 import { ProgramService } from '@app/programs/program-service/program-service.service';
 import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { selectAllActivities } from '../selectors/activity.selector';
 
 export interface ActivityDialogData {
   activity?: Activity;

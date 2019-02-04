@@ -1,4 +1,3 @@
-import { Action, createFeatureSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityState, EntityAdapter } from '@ngrx/entity';
 import { Program, Programs } from '../program';
 import { ProgramActionTypes, ProgramActions } from '../actions/program.actions';

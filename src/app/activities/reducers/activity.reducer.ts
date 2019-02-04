@@ -1,4 +1,3 @@
-import { Action } from '@ngrx/store';
 import { Activity, Activities } from '../activity';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import {
