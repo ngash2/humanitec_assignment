@@ -47,12 +47,14 @@ export class ProgramsListComponent implements OnInit {
     this.subscription = this.store
       .pipe(select(selectAllPrograms))
       .subscribe(data => {
-        this.programs = data;
-        this.programsTotal = data.length;
-        this.dataSource = new MatTableDataSource<Program>(
-          [...this.programs].slice(this.pageIndex, this.pageSize)
-        );
-        this.loading = false;
+        if (data.length > 0) {
+          this.programs = data;
+          this.programsTotal = data.length;
+          this.dataSource = new MatTableDataSource<Program>(
+            [...this.programs].slice(this.pageIndex, this.pageSize)
+          );
+          this.loading = false;
+        }
       });
   }
 

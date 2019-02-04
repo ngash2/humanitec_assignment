@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { BASE_URL } from '@app/app.config';
-import { Observable } from 'rxjs';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class AppService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: 'Bearer GfR6vIHG0zTWaJle6TjNXvYUrjDn6g'
+      Authorization: environment.token
     })
   };
 

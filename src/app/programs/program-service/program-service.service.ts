@@ -22,10 +22,9 @@ export class ProgramService {
   }
 
   /**
-   * Get a List of Programs
+   * Get a List of Programs from the Server
    * @returns {Programs} Programs
    */
-
   public getPrograms() {
     return this.service.get(this.programUrl, new HttpParams()).pipe(
       catchError(e => throwError(e)),
